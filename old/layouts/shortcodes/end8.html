@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\nimport std::core::env;\n\nfn void main()\n{\n\tio::printf(\"It's crucial to say \");\n\tswitch (env::OS_TYPE)\n\t{\n\t\tcase WIN32:\n\t\t\tio::printf(\"WNU-\");\n\t\tcase LINUX:\n\t\t\tio::printf(\"GNU-\");\n\t\tcase MACOS:\n\t\t\tio::printf(\"MNU-\");\n\t\tdefault:\n\t\t\tio::printf(\"DUNNO-\");\n\t}\n\tio::printfn(\"Linux.\");\n}\n";
+</script>
+

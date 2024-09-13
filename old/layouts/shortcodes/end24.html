@@ -1,0 +1,15 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfault DivisionResult\n{\n\tDIVISION_BY_ZERO\n}\n\nfn int! divide_int(int x, int y)\n{\n\tif (!y) return DivisionResult.DIVISION_BY_ZERO?;\n\treturn x / y;\n}\n\nfn void main()\n{\n\tint a = 4;\n\tint b = 2;\n\n\tif (try div = divide_int(a, b))\n\t{\n\t\t// This code will only be run if b != 0\n\t\tio::printfn(\"b is not zero\");\n\t}\n}\n";
+</script>

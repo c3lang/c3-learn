@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfn void test(int x, double y)\n{\n\tio::printfn(\"%f\", x + y);\n}\n\nfn void main()\n{\n\ttest(.y = 3.0, .x = 1);\n\ttest(3, 4.0);\n\ttest(15, .y = 3.141592);\n}\n";
+</script>
+

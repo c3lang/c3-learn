@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\ndef IntCallback = fn int(int x);\n\nfn int square(int x)\n{\n\treturn x * x;\n}\n\nfn int cube(int x)\n{\n\treturn x * x * x;\n}\n\nfn void print10(IntCallback callback)\n{\n\tfor (int i = 1; i <= 10; i++)\n\t{\n\t\tio::printfn(\"%d -> %d\", i, callback(i));\n\t}\n}\n\nfn void main()\n{\n\tprint10(&square);\n\tprint10(&cube);\n}\n";
+</script>
+

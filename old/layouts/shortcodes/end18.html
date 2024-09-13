@@ -1,0 +1,15 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfn void main()\n{\n\tint a = 0;\n\tint r = {|\n\t\tif (a != 0) return a;\n\t\tio::printf(\"hello, \");\n\t\treturn 42;\n\t|};\n\tio::printfn(\"world %d\",r);\n}\n";
+</script>

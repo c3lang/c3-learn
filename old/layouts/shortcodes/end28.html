@@ -1,0 +1,15 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\ndef MyInt = int;\ndef MyId = distinct int;\n\nfn void main()\n{\n\tMyInt x = 27;\n\tMyId y = 3;\n\tint a = x;\n\t// int b = y; <- This doesn't work\n\n\t// Explicit conversion works\n\tx += (int)y;\n\n\tio::printfn(\"%s %s\", y, x);\n}\n";
+</script>

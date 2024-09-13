@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfn void test(float[] values)\n{\n\tio::printn(\"Forward\");\n\tforeach (index, value : values)\n\t{\n\t\tio::printfn(\"%d: %f\", index, value);\n\t}\n\tio::printn(\"Back\");\n\tforeach_r (index, value : values)\n\t{\n\t\tio::printfn(\"%d: %f\", index, value);\n\t}\n}\n\nfn void main()\n{\n\ttest({ 3.2, 5.0, 1.5, 7.135});\n}\n";
+</script>
+

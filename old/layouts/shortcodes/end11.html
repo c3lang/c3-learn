@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nunion Point\n{\n\t// Nested struct\n\tstruct\n\t{\n\t\tint x, y;\n\t}\n\tint[2] v;\n}\n\nfn void main()\n{\n\tPoint p = { 2, 3 };\n\n\tio::printfn(\"Point: %d, %d\", p.x, p.y);\n\t// Reassign the p value using a literal and named arguments:\n\tp = { .v = { 5, -1 } };\n\tio::printfn(\"Point: %d, %d\", p.x, p.y);\n}\n";
+</script>
+

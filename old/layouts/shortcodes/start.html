@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css"></link>
+<script src="/lib/jquery.js"></script>
+<script src="/lib/codemirror/lib/codemirror.js"></script>
+<script src="/lib/codemirror/mode/c3/c3.js"></script>
+
+<style>
+.fhor{
+	display:flex;
+	flex-direction:row;
+	gap:20px;
+}
+@media all and (max-width:1000px){
+	.fhor{
+		flex-wrap:wrap;
+	}
+}
+
+.fhorb{
+	display:flex;
+	flex-direction:row;
+}
+
+.fvert{
+	width:100%;
+	height:650px;
+	max-width:500px;
+	display:flex;
+	flex-direction:column;
+	align-items:flex-end;
+}
+
+#doc{
+	padding:0;
+	margin:0;
+	width:80%;
+	height:100%;
+}
+@media all and (max-width:1000px){
+	#doc{
+		width:100%;
+	}
+}
+
+.CodeMirror{
+	width: 100%;
+	width: -moz-available;
+	width: -webkit-fill-available;
+	width: fill-available;
+	height:100%;
+	border:solid 1px #295E92;
+}
+
+#stdout{
+	font-family:Consolas, Courier;
+	font-size:14px;
+	background-color:#FAFEFF;
+	color:#111111;
+	width:100%;
+	height:50%;
+	resize:none;
+	border:solid 1px #295E92;
+	border-top-width:0;
+	padding:6px;
+	margin:0;
+	tab-size:4;
+}
+
+#stdout:focus{
+	outline:none;
+}
+
+#stdout::selection{
+	background-color:#9BBFE3;
+}
+
+button{
+	color:#000000;
+	font-size:14px;
+	border:solid 1px #295E92;
+	padding:0;
+	margin:0;
+	width:80px;
+	height:30px;
+}
+
+#tcpb{
+	background-color:#D2E0ED;
+	border-bottom-width:0;
+	border-right-width:0;
+}
+
+#tcpb:hover{
+	background-color:#9FBDD9;
+}
+
+#tclb{
+	background-color:#EDD1D1;
+	border-bottom-width:0;
+	border-right-width:0;
+}
+
+#tclb:hover{
+	background-color:#E1B3B3;
+}
+
+#trsb{
+	background-color:#EDD1D1;
+	border-bottom-width:0;
+	border-right-width:0;
+}
+
+#trsb:hover{
+	background-color:#E1B3B3;
+}
+
+#trnb{
+	background-color:#D1EDD5;
+	border-bottom-width:0;
+}
+
+#trnb:hover{
+	background-color:#B3E1BA;
+}
+</style>
+
+<script>
+function trsb(){
+	editor.getDoc().setValue(defcod);
+	document.getElementById('stdout').textContent= "";
+}
+
+function trnb(){
+	document.getElementById('stdout').style.color="#111111";
+	document.getElementById('stdout').textContent= "Processing...";
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "https://api.learn-c3.org/");
+	xhr.responseType = "json";
+	xhr.send(JSON.stringify({c: editor.getValue()}));
+	xhr.onload = () => {
+		const res = xhr.response;
+		if (res.compile.stderr != "") {
+			document.getElementById('stdout').style.color="red";
+			document.getElementById('stdout').innerHTML= res.compile.stderr;
+		} else
+			document.getElementById('stdout').innerHTML= res.run.stdout;
+	}
+}
+
+function tclb(){
+	document.getElementById('stdout').textContent= "";
+	editor.getDoc().setValue('');
+}
+
+function tcpb(){
+	var e = document.getElementsByClassName('CodeMirror');
+	setTimeout(function() {
+		e[0].style.backgroundColor="#FFFFFF";
+	}, 30);
+	e[0].style.backgroundColor="#D2E0ED";
+	navigator.clipboard.writeText(editor.getValue());
+}
+
+let code;
+let editor;
+$(document).ready(function(){
+	code = $("#stdin")[0];
+	editor = CodeMirror.fromTextArea(code, {
+		mode: "c3",
+		tabSize: 4,
+		indentUnit: 4,
+		indentWithTabs: true,
+		lineNumbers : false
+	});
+	editor.getDoc().setValue(defcod);
+});
+</script>
+
+<div class="fhor">
+<div id="doc">
+

@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nmacro void @swap(&x, &y)\n{\n\t$typeof(x) t = x;\n\n\tx = y;\n\ty = t;\n}\n\nfn void main()\n{\n\tint a = 0;\n\tint b = 1;\n\n\tio::printfn(\"%d\", a);\n\t@swap(a, b);\n\tio::printfn(\"%d\", a);\n}\n";
+</script>
+

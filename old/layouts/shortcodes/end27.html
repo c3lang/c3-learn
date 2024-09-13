@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfn bool is_odd(int x)\n{\n\treturn x % 2 == 0;\n}\n\nfn void main()\n{\n\tint x = 2;\n\n\tswitch \n\t{\n\tcase x == 1:\n\t\tio::printfn(\"One\");\n\tcase is_odd(x):\n\t\tio::printfn(\"Odd\");\n\tcase x < 0:\n\t\tio::printfn(\"Negative\");\n\tcase x == 0:\n\t\tio::printfn(\"Zero\");\n\tdefault:\n\t\tio::printfn(\"Number was: %d\", x);\n\t}\n}\n";
+</script>
+

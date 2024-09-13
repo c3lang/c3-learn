@@ -1,0 +1,16 @@
+</div>
+<div class="fvert">
+<div class="fhorb">
+<button id="tclb" onclick="tclb()">CLEAR</button>
+<button id="trsb" onclick="trsb()">RESET</button>
+<button id="tcpb" onclick="tcpb()">COPY</button>
+<button id="trnb" onclick="trnb()">RUN</button>
+</div>
+<textarea id="stdin"></textarea>
+<textarea id="stdout" readonly></textarea>
+</div>
+</div>
+<script>
+let defcod = "import std::io;\n\nfault Test\n{\n\tSOMETHING_MISSING,\n\tGENERAL_ERROR_WAS_HERE\n}\n\nfn void! x(int i)\n{\n\tif (i < 0) return Test.SOMETHING_MISSING?;\n}\n\nfn void main()\n{\n\tanyfault y = x(10);\n\n\tif (y) io::printfn(\"10 had error.\");\n\ty = x(-1);\n\tif (y) io::printfn(\"-1 had error.\");\n}\n";
+</script>
+
