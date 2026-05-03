@@ -1,12 +1,14 @@
 {{ if .Attributes.norun }}
 	{{ (transform.HighlightCodeBlock .).Wrapped }}
 {{ else }}
-	{{ if not (.Page.Store.Get "codeblock-loaded") }}
-		<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css"></link>
-		<link rel="stylesheet" href="/lib/syntax-dark.css"></link>
+		<!--<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css"></link>-->
+		<!--<link rel="stylesheet" href="/lib/syntax-dark.css"></link>-->
+		<link rel="stylesheet" href="/lib/prism-dark.css">
 		<script src="/lib/jquery.js"></script>
-		<script src="/lib/codemirror/lib/codemirror.js"></script>
-		<script src="/lib/codemirror/mode/c3/c3.js"></script>
+		<script type="module" src="/lib/codejar.min.js"></script>
+		<script src="/lib/prism.js" data-manual></script>
+		<script src="/lib/prism-c3.js"></script>
+		<!--<script src="/lib/prism-autoloader.js"></script>-->
 		<style>
 		.fhor{
 			display:flex;
@@ -127,8 +129,6 @@
 			background-color:#B3E1BA;
 		}
 		</style>
-		{{ .Page.Store.Set "codeblock-loaded" true }}
-	{{ end }}
 	{{ if not (.Page.Store.Get "codeblock-id") }}
 		{{ .Page.Store.Set "codeblock-id" 0 }}
 	{{ end }}
@@ -136,7 +136,9 @@
 	{{ $id := (.Page.Store.Get "codeblock-id") }}
 
 	<div class="c3block">
-		<script>
+		<script type="module">
+
+		import {CodeJar} from "/lib/codejar.min.js";
 		$(document).ready(() => {
 			const STDOUT = document.getElementById('stdout-{{$id}}');
 			const STDIN = document.getElementById('stdin-{{$id}}');
@@ -144,32 +146,26 @@
 			let defcod = {{ .Inner }}.trim();
 
 			let code = $("#stdin-{{$id}}")[0];
-			let editor = CodeMirror.fromTextArea(code, {
-				mode: "c3",
-				tabSize: 4,
-				indentUnit: 4,
-				indentWithTabs: true,
-				lineNumbers : false,
-			});
-			editor.getDoc().setValue(defcod);
+			let editor = CodeJar(code, (e) => Prism.highlightElement(e, false), {tab: '\t'});
+			editor.updateCode(defcod);
 
 			$("#clear-{{$id}}").click(() => {
 				STDOUT.textContent= "";
 				STDOUT.hidden = true;
-				editor.getDoc().setValue('');
+				editor.updateCode('');
 			})
 			$("#reset-{{$id}}").click(() => {
-				editor.getDoc().setValue(defcod);
+				editor.updateCode(defcod);
 				STDOUT.textContent= "";
 				STDOUT.hidden = true;
 			})
 			$("#copy-{{$id}}").click(() => {
-				var e = document.getElementsByClassName('CodeMirror');
+				// var e = document.getElementsByClassName('CodeMirror');
 				// setTimeout(function() {
 				// 	e[0].style.backgroundColor="#FFFFFF";
 				// }, 30);
 				// e[0].style.backgroundColor="#D2E0ED";
-				navigator.clipboard.writeText(editor.getValue());
+				navigator.clipboard.writeText(editor.toString());
 			})
 			$("#run-{{$id}}").click(() => {
 				STDOUT.hidden = false;
@@ -179,7 +175,7 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", "https://api.learn-c3.org/");
 				xhr.responseType = "json";
-				xhr.send(JSON.stringify({c: editor.getValue()}));
+				xhr.send(JSON.stringify({c: editor.toString()}));
 				xhr.onload = () => {
 					const res = xhr.response;
 					if (res.compile.stderr != "") {
@@ -203,7 +199,7 @@
 			<button class="runb"   id="run-{{$id}}">RUN</button>
 		</div>
 		<div>
-			<textarea id="stdin-{{$id}}"></textarea>
+			<pre><code id="stdin-{{$id}}" class="language-c3"></code></pre>
 			<textarea id="stdout-{{$id}}" class="stdout" readonly hidden></textarea>
 		</div>
 	</div>

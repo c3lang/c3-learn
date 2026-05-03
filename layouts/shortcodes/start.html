@@ -1,7 +1,9 @@
-<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css"></link>
+<!--<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css"></link>-->
+<link rel="stylesheet" href="/lib/prism-dark.css">
 <script src="/lib/jquery.js"></script>
-<script src="/lib/codemirror/lib/codemirror.js"></script>
-<script src="/lib/codemirror/mode/c3/c3.js"></script>
+<script type="module" src="/lib/codejar.min.js"></script>
+<script src="/lib/prism.js" data-manual></script>
+<script src="/lib/prism-c3.js"></script>
 
 <style>
 .fhor{
@@ -125,7 +127,7 @@ button{
 
 <script>
 function trsb(){
-	editor.getDoc().setValue(defcod);
+	editor.updateCode(defcod);
 	document.getElementById('stdout').textContent= "";
 }
 
@@ -135,7 +137,7 @@ function trnb(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "https://api.learn-c3.org/");
 	xhr.responseType = "json";
-	xhr.send(JSON.stringify({c: editor.getValue()}));
+	xhr.send(JSON.stringify({c: editor.toString()}));
 	xhr.onload = () => {
 		const res = xhr.response;
 		if (res.compile.stderr != "") {
@@ -148,7 +150,7 @@ function trnb(){
 
 function tclb(){
 	document.getElementById('stdout').textContent= "";
-	editor.getDoc().setValue('');
+	editor.updateCode('');
 }
 
 function tcpb(){
@@ -157,21 +159,18 @@ function tcpb(){
 		e[0].style.backgroundColor="#FFFFFF";
 	}, 30);
 	e[0].style.backgroundColor="#D2E0ED";
-	navigator.clipboard.writeText(editor.getValue());
+	navigator.clipboard.writeText(editor.toString());
 }
-
 let code;
 let editor;
+</script>
+
+<script type="module">
+import {CodeJar} from "/lib/codejar.min.js";
 $(document).ready(function(){
 	code = $("#stdin")[0];
-	editor = CodeMirror.fromTextArea(code, {
-		mode: "c3",
-		tabSize: 4,
-		indentUnit: 4,
-		indentWithTabs: true,
-		lineNumbers : false
-	});
-	editor.getDoc().setValue(defcod);
+	editor = CodeJar(code, (e) => Prism.highlightElement(e, false), {tab: '\t'});
+	editor.updateCode(defcod);
 });
 </script>
 
