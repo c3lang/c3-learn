@@ -1,6 +1,7 @@
 {{ if .Attributes.norun }}
 	{{ (transform.HighlightCodeBlock .).Wrapped }}
 {{ else }}
+	{{ if not (.Page.Store.Get "codeblock-loaded") }}
 		<link rel="stylesheet" href="/lib/prism-dark.css">
 		<script src="/lib/jquery.js"></script>
 		<script type="module" src="/lib/codejar.min.js"></script>
@@ -126,6 +127,8 @@
 			background-color:#B3E1BA;
 		}
 		</style>
+		{{ .Page.Store.Set "codeblock-loaded" true }}
+	{{ end }}
 	{{ if not (.Page.Store.Get "codeblock-id") }}
 		{{ .Page.Store.Set "codeblock-id" 0 }}
 	{{ end }}
