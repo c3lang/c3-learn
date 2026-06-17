@@ -43,7 +43,7 @@ Prism.languages['c3'] = {
 		alias: 'important',
 	},
 	'comptime-keyword': {
-		pattern: /(?<!\w)[$](?:alignof|assert|assignable|case|default|defined|echo|else|embed|endfor|endforeach|endif|endswitch|eval|evaltype|error|exec|extnameof|expand|feature|for|foreach|if|include|is_const|kindof|nameof|offsetof|qnameof|reflect|sizeof|stringify|switch|[tT]ypefrom|[tT]ypeof|vacount|vatype|vaconst|vaarg|vaexpr|vasplat)\b/,
+		pattern: /(?<!\w)[$](?:assert|case|default|defined|echo|else|embed|endfor|endforeach|endif|endswitch|eval|error|exec|expand|feature|for|foreach|if|include|reflect|stringify|switch|Typefrom|Typeof|vaarg)\b/,
 		alias: 'function',
 	},
 	'builtin-keyword': {
@@ -51,7 +51,7 @@ Prism.languages['c3'] = {
 		alias: 'number',
 	},
 	'attribute': {
-		pattern: /(?<!\w)[@](?:align|allow_deprecated|benchmark|bigendian|builtin|callconv|cdecl|cname|compact|const|constinit|deprecated|dynamic|export|extern|extname|finalizer|format|if|inline|init|interface|jump|link|littleendian|local|maydiscard|mustinit|naked|noalias|nodiscard|noinit|noinline|nopadding|norecurse|noreturn|nosanitize|nostrip|obfuscate|operator|operator_r|operator_s|optional|overlap|packed|private|priority|public|pure|reflect|safeinfer|safemacro|simd|sizeof|section|stdcall|structlike|tag|test|unused|used|veccall|wasm|weak|winmain)\b/,
+		pattern: /(?<!\w)[@](?:align|allow_deprecated|benchmark|bigendian|builtin|callconv|cname|compact|const|constinit|deprecated|dynamic|export|finalizer|format|if|inline|init|jump|link|littleendian|local|maydiscard|mustinit|naked|noalias|nodiscard|noinit|noinline|nopadding|norecurse|noreturn|nosanitize|nostrip|obfuscate|operator|operator_r|operator_s|optional|overlap|packed|private|public|pure|reflect|safeinfer|safemacro|simd|section|tag|test|unused|used|wasm|weak|weaklink|winmain)\b/,
 		alias: 'important',
 	},
 	'builtin-type': {
