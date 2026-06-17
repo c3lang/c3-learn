@@ -1,178 +1,40 @@
+{{ if not (.Page.Store.Get "codeblock-id") }}
+{{ .Page.Store.Set "codeblock-id" 0 }}
+{{ end }}
+{{ .Page.Store.Add "codeblock-id" 1 }}
+{{ $id := (.Page.Store.Get "codeblock-id") }}
+
 {{ if .Attributes.norun }}
-	{{ (transform.HighlightCodeBlock .).Wrapped }}
-{{ else }}
-		<link rel="stylesheet" href="/lib/prism-dark.css">
-		<script src="/lib/jquery.js"></script>
-		<script type="module" src="/lib/codejar.min.js"></script>
-		<script src="/lib/prism.js" data-manual></script>
-		<script src="/lib/prism-c3.js"></script>
-		<style>
-		.fhor{
-			display:flex;
-			flex-direction:row;
-			gap:20px;
-		}
-		@media all and (max-width:1000px){
-			.fhor{
-				flex-wrap:wrap;
-			}
-		}
-
-		.c3block_buttons{
-			display:flex;
-			flex-direction:row;
-			position: absolute;
-			top: 0px;
-			right: 0px;
-		}
-		
-
-		/*.fvert{
-			width:100%;
-			height:650px;
-			max-width:500px;
-			display:flex;
-			flex-direction:column;
-			align-items:flex-end;
-		}*/
-
-		#doc{
-			padding:0;
-			margin:0;
-			width:80%;
-			height:100%;
-		}
-		@media all and (max-width:1000px){
-			#doc{
-				width:100%;
-			}
-		}
-
-		.language-c3{
-			width: 100%;
-			width: -moz-available;
-			width: -webkit-fill-available;
-			width: fill-available;
-			height:100%;
-			/*border:solid 1px #295E92;*/
-		}
-
-		.stdout{
-			font-family:Consolas, Courier;
-			font-size:14px;
-			background-color:#FAFEFF;
-			color:#111111;
-			width: 100%;
-			/*height: 8em;*/
-			/*overflow-y: auto;*/
-			max-height: 20em;
-			border:solid 1px #295E92;
-			border-top-width:0;
-			padding:6px;
-			margin:0;
-			tab-size:4;
-		}
-
-		.stdout:focus{
-			outline:none;
-		}
-
-		.stdout::selection{
-			background-color:#9BBFE3;
-		}
-
-		button {
-			color:#000000;
-			font-size:14px;
-			/*border: solid 1px #295E92;*/
-			border: solid 1px white;
-			/*border: none;*/
-			padding:4px;
-			margin:5px;
-			width: auto;
-			height: auto;
-			border-radius: 20%;
-			width: 32px;
-			height: 32px;
-
-		}
-
-		button img {
-			filter: invert(100%);
-		}
-
-		</style>
-	{{ if not (.Page.Store.Get "codeblock-id") }}
-		{{ .Page.Store.Set "codeblock-id" 0 }}
-	{{ end }}
-	{{ .Page.Store.Add "codeblock-id" 1 }}
-	{{ $id := (.Page.Store.Get "codeblock-id") }}
-
-	<div class="c3block">
-		<script type="module">
-		import {CodeJar} from "/lib/codejar.min.js";
-		$(document).ready(() => {
-			const STDOUT = document.getElementById('stdout-{{$id}}');
-			const STDIN = document.getElementById('stdin-{{$id}}');
-			const trim_newline = (str) => str.endsWith("\n") ? str.slice(0, -1) : str;
-			let defcod = {{ .Inner }}.trim();
-
-			let code = $("#stdin-{{$id}}")[0];
-			let editor = CodeJar(code, (e) => Prism.highlightElement(e, false), {tab: '\t'});
-			editor.updateCode(defcod);
-
-			$("#clear-{{$id}}").click(() => {
-				STDOUT.textContent= "";
-				STDOUT.hidden = true;
-				editor.updateCode('');
-			})
-			$("#reset-{{$id}}").click(() => {
-				editor.updateCode(defcod);
-				STDOUT.textContent= "";
-				STDOUT.hidden = true;
-			})
-			$("#copy-{{$id}}").click(() => {
-				// var e = document.getElementsByClassName('CodeMirror');
-				// setTimeout(function() {
-				// 	e[0].style.backgroundColor="#FFFFFF";
-				// }, 30);
-				// e[0].style.backgroundColor="#D2E0ED";
-				navigator.clipboard.writeText(editor.toString());
-			})
-			$("#run-{{$id}}").click(() => {
-				STDOUT.hidden = false;
-				STDOUT.style.height = ""; // shrink stdout to its default size so that the `Processing...` text doesn't have a large border from the previous stdout
-				STDOUT.style.color="#111111";
-				STDOUT.textContent= "Processing...";
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "https://api.learn-c3.org/");
-				xhr.responseType = "json";
-				xhr.send(JSON.stringify({c: editor.toString()}));
-				xhr.onload = () => {
-					const res = xhr.response;
-					if (res.compile.stderr != "") {
-						STDOUT.style.color="red";
-						STDOUT.innerHTML = trim_newline(res.compile.stderr);
-					} else {
-						STDOUT.innerHTML = trim_newline(res.run.output);
-					}
-					// resize stdout to the height of its text (bounded by max-height of 20em)
-					STDOUT.style.height = STDOUT.scrollHeight + "px";
-				}
-			})
-			// console.log("Code block {{$id}} loaded");
-		})
-		</script>
-
-		<div style="position: relative">
-			<div class="c3block_buttons">
-				<button class="clearb" id="clear-{{$id}}" hidden>CLEAR</button>
-				<button class="resetb" id="reset-{{$id}}"><img src="/icons/rotate-ccw.svg" title="Reset code"></img></button>
-				<button class="copyb"  id="copy-{{$id}}"><img src="/icons/copy.svg" title="Copy code"></img></button>
-				<button class="runb"   id="run-{{$id}}"><img src="/icons/play.svg" title="Run code"></img></button>
-			</div>
-			<pre><code id="stdin-{{$id}}" class="language-c3"></code></pre>
-			<textarea id="stdout-{{$id}}" class="stdout" readonly hidden></textarea>
+<div class="c3block c3block-norun">
+	<div style="position: relative;">
+		<div class="c3block_buttons">
+			<button class="copyb" id="copy-{{$id}}">
+				<div class="icon-copy"></div>
+			</button>
 		</div>
+		<pre><code id="code-{{$id}}" class="language-c3">{{ trim .Inner "\r\n" }}</code></pre>
 	</div>
+</div>
+{{ else }}
+<div class="c3block">
+	<div style="position: relative;">
+		<div id="defcod-{{$id}}" style="display: none;">{{ trim .Inner "\r\n" }}</div>
+		<div class="c3block_buttons">
+			<button class="clearb" id="clear-{{$id}}">
+				<div class="icon-x"></div>
+			</button>
+			<button class="resetb" id="reset-{{$id}}">
+				<div class="icon-reset"></div>
+			</button>
+			<button class="copyb" id="copy-{{$id}}">
+				<div class="icon-copy"></div>
+			</button>
+			<button class="runb" id="run-{{$id}}">
+				<div class="icon-play"></div>
+			</button>
+		</div>
+		<pre><code id="stdin-{{$id}}" class="language-c3">{{ trim .Inner "\r\n" }}</code></pre>
+		<textarea id="stdout-{{$id}}" class="stdout" readonly hidden></textarea>
+	</div>
+</div>
 {{ end }}
