@@ -1,3 +1,4 @@
-<script>
-let defcod = {{ .Inner }}.trim();
-</script>
+{{ $id := .Page.Store.Get "current-codeblock-id" }}
+{{ $trimmed := trim .Inner "\r\n" }}
+{{ .Page.Store.Set (printf "defcod-text-%d" $id) $trimmed }}
+<div id="defcod-{{$id}}" style="display: none;">{{ $trimmed }}</div>
