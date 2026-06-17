@@ -43,7 +43,7 @@ Prism.languages['c3'] = {
 		alias: 'important',
 	},
 	'comptime-keyword': {
-		pattern: /(?<!\w)[$](?:alignof|assert|assignable|case|default|defined|echo|else|embed|endfor|endforeach|endif|endswitch|eval|evaltype|error|exec|extnameof|expand|feature|for|foreach|if|include|is_const|kindof|nameof|offsetof|qnameof|reflect|sizeof|stringify|switch|Typefrom|Typeof|vacount|vatype|vaconst|vaarg|vaexpr|vasplat)\b/,
+		pattern: /(?<!\w)[$](?:alignof|assert|assignable|case|default|defined|echo|else|embed|endfor|endforeach|endif|endswitch|eval|evaltype|error|exec|extnameof|expand|feature|for|foreach|if|include|is_const|kindof|nameof|offsetof|qnameof|reflect|sizeof|stringify|switch|[tT]ypefrom|[tT]ypeof|vacount|vatype|vaconst|vaarg|vaexpr|vasplat)\b/,
 		alias: 'function',
 	},
 	'builtin-keyword': {
@@ -51,7 +51,7 @@ Prism.languages['c3'] = {
 		alias: 'number',
 	},
 	'attribute': {
-		pattern: /(?<!\w)[@](?:align|allow_deprecated|benchmark|bigendian|builtin|callconv|cdecl|cname|compact|deprecated|dynamic|export|extern|extname|finalizer|format|if|inline|init|interface|jump|link|littleendian|local|maydiscard|mustinit|naked|noalias|nodiscard|noinit|noinline|nopadding|norecurse|noreturn|nosanitize|nostrip|obfuscate|operator|operator_r|operator_s|optional|overlap|packed|private|priority|public|pure|reflect|safeinfer|safemacro|simd|sizeof|section|stdcall|structlike|tag|test|unused|used|veccall|wasm|weak|winmain)\b/,
+		pattern: /(?<!\w)[@](?:align|allow_deprecated|benchmark|bigendian|builtin|callconv|cdecl|cname|compact|const|constinit|deprecated|dynamic|export|extern|extname|finalizer|format|if|inline|init|interface|jump|link|littleendian|local|maydiscard|mustinit|naked|noalias|nodiscard|noinit|noinline|nopadding|norecurse|noreturn|nosanitize|nostrip|obfuscate|operator|operator_r|operator_s|optional|overlap|packed|private|priority|public|pure|reflect|safeinfer|safemacro|simd|sizeof|section|stdcall|structlike|tag|test|unused|used|veccall|wasm|weak|winmain)\b/,
 		alias: 'important',
 	},
 	'builtin-type': {
@@ -60,7 +60,7 @@ Prism.languages['c3'] = {
 	},
 
 	'module-decl': {
-		pattern: /[ \t]*(module|import)[ \t]+[a-z0-9_]+(?:::[a-z0-9_]+)*(?:(?:,[ \t]*[a-z0-9_]+(?:::[a-z0-9_]+)*)+)?/,
+		pattern: /\s*(module|import)\s+[a-z0-9_]+(?:::[a-z0-9_]+)*(?:(?:,\s*[a-z0-9_]+(?:::[a-z0-9_]+)*)+)?/,
 		greedy: true,
 		alias: 'variable',
 		inside: {
