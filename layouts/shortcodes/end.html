@@ -1,12 +1,23 @@
+{{ $id := .Page.Store.Get "current-codeblock-id" }}
 </div>
 <div class="fvert">
-	<div class="c3block_buttons">
-		<button class="clearb" id="clear" onclick="tclb()" hidden>CLEAR</button>
-		<button class="resetb" id="reset" onclick="trsb()"><img src="/icons/rotate-ccw.svg" title="Reset code"></img></button>
-		<button class="copyb"  id="copy" onclick="tcpb()"><img src="/icons/copy.svg" title="Copy code"></img></button>
-		<button class="runb"   id="run" onclick="trnb()"><img src="/icons/play.svg" title="Run code"></img></button>
+	<div style="position: relative; width: 100%;">
+		<div class="c3block_buttons">
+			<button class="clearb" id="clear-{{$id}}">
+				<div class="icon-x"></div>
+			</button>
+			<button class="resetb" id="reset-{{$id}}">
+				<div class="icon-reset"></div>
+			</button>
+			<button class="copyb" id="copy-{{$id}}">
+				<div class="icon-copy"></div>
+			</button>
+			<button class="runb" id="run-{{$id}}">
+				<div class="icon-play"></div>
+			</button>
+		</div>
+		<pre><code id="stdin-{{$id}}" class="language-c3">{{ .Page.Store.Get (printf "defcod-text-%d" $id) }}</code></pre>
 	</div>
-	<pre><code id="stdin" class="language-c3"></code></pre>
-	<textarea id="stdout" readonly></textarea>
+	<textarea id="stdout-{{$id}}" class="stdout" readonly hidden></textarea>
 </div>
 </div>
